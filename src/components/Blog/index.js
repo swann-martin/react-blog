@@ -1,5 +1,5 @@
 // == Import
-import React from 'react';
+import React, { PureComponent } from 'react';
 
 // Composants
 import Header from 'src/components/Header';
@@ -12,18 +12,28 @@ import postsData from 'src/data/posts';
 import './styles.scss';
 
 // == Composant
-const Blog = () => {
-  console.log(categoriesData);
-  console.log(postsData);
+class Blog extends PureComponent {
+  constructor(props) {
+    super(props);
+    this.state = {
+      posts: postsData,
+      categories: categoriesData,
+    };
+  }
 
-  return (
-    <div className="blog">
-      <Header />
-      <Posts />
-      <Footer />
-    </div>
-  );
-};
+  render() {
+    const { posts, categories } = this.state;
+    console.log('categoriesData', categoriesData);
+    console.log('postData', postsData);
+    return (
+      <div className="blog">
+        <Header categories={categories} />
+        <Posts posts={posts} />
+        <Footer />
+      </div>
+    );
+  }
+}
 
 // == Export
 export default Blog;
