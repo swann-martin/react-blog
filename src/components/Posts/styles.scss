@@ -17,5 +17,9 @@
   &-list {
     display: flex;
     flex-wrap: wrap;
+    &--zenOn {
+      display: block;
+      width: 100%;
+    }
   }
 }

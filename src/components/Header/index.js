@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import './styles.scss';
 
-const Header = ({ categories }) => (
+const Header = ({ categories, zenMode, onZenActivationClicked }) => (
   <header className="menu">
     <nav>
       {categories.map(({ route, label }) => (
@@ -12,14 +12,21 @@ const Header = ({ categories }) => (
         </a>
       ))}
 
-      <button className="menu-btn" type="button">
-        Activer le mode zen
+      <button
+        className="menu-btn"
+        type="button"
+        onClick={() => {
+          onZenActivationClicked();
+        }}
+      >
+        {zenMode ? 'Activer le mode zen' : 'Desactiver le mode zen'}
       </button>
     </nav>
   </header>
 );
 
 Header.propTypes = {
+  zenMode: PropTypes.bool,
   categories: PropTypes.arrayOf(
     PropTypes.shape({
       route: PropTypes.string,
@@ -29,6 +36,7 @@ Header.propTypes = {
 };
 
 Header.defaultProps = {
+  zenMode: false,
   categories: [],
 };
 

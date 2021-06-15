@@ -4,25 +4,19 @@ import Post from 'src/components/Post';
 
 import './styles.scss';
 
-const Posts = ({ posts }) => (
+const Posts = ({ posts, zenOn }) => (
   <main className="posts">
     <h1 className="posts-title">Dev Of Thrones</h1>
-    <div className="posts-list">
+    <div className={zenOn ? 'posts-list' : 'post-list post-list--zenOn'}>
       {posts.map((post) => (
-        <Post key={post.id} {...post} />
+        <Post key={post.id} {...post} zen={zenOn} />
       ))}
-
-      {/* <Post />
-      <Post />
-      <Post />
-      <Post />
-      <Post />
-      <Post /> */}
     </div>
   </main>
 );
 
 Posts.propTypes = {
+  zenOn: PropTypes.bool,
   posts: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.number,
@@ -33,6 +27,7 @@ Posts.propTypes = {
 };
 
 Posts.defaultProps = {
+  zenOn: false,
   posts: [],
 };
 
