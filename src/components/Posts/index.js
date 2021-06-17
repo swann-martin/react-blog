@@ -4,12 +4,12 @@ import Post from 'src/components/Post';
 
 import './styles.scss';
 
-const Posts = ({ posts, zenOn }) => (
+const Posts = ({ list, zenOn }) => (
   <main className="posts">
     <h1 className="posts-title">Dev Of Thrones</h1>
     <div className={zenOn ? 'posts-list' : 'post-list post-list--zenOn'}>
-      {posts.map((post) => (
-        <Post key={post.id} {...post} zen={zenOn} />
+      {list.map((postObject) => (
+        <Post key={postObject.id} {...postObject} zen={zenOn} />
       ))}
     </div>
   </main>
@@ -26,7 +26,7 @@ Posts.propTypes = {
 
 Posts.defaultProps = {
   zenOn: false,
-  posts: [],
+  list: [],
 };
 
 export default Posts;

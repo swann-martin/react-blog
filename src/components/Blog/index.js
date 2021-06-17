@@ -1,11 +1,14 @@
 // == Import
-import React, { PureComponent } from 'react';
+import React, { useState } from 'react';
+import { Route, Switch } from 'react-router-dom';
+
 import PropTypes from 'prop-types';
 
 // Composants
 import Header from 'src/components/Header';
 import Posts from 'src/components/Posts';
 import Footer from 'src/components/Footer';
+import NotFound from 'src/components/NotFound';
 
 // data, styles et utilitaires
 import categoriesData from 'src/data/categories';
@@ -13,42 +16,47 @@ import postsData from 'src/data/posts';
 import './styles.scss';
 
 // == Composant
-class Blog extends PureComponent {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isZen: true,
-      posts: postsData,
-      categories: categoriesData,
-    };
-  }
+const Blog = () => {
+  const [zenMode, setZenMode] = useState(true);
+  const [postsList, setPostsList] = useState(postsData);
+  const [categoriesList, setCategoriesList] = useState(categoriesData);
 
-  handleZenMode = () => {
-    const { isZen } = this.state;
-    this.setState({
-      isZen: !isZen,
-    });
+  const handleZenMode = () => {
+    setZenMode(!zenMode);
   };
 
-  render() {
-    const { posts, categories, isZen } = this.state;
+  const filterPosts = (label) => {
+    if (label === 'Accueil') {
+      return postsList;
+    }
+    return postsList.filter((post) => post.category === label);
+  };
 
-    return (
-      <div className="blog">
-        <Header
-          categories={categories}
-          zenMode={isZen}
-          onZenActivationClicked={this.handleZenMode}
-        />
-        <Posts posts={posts} zenOn={isZen} />
-        <Footer />
-      </div>
-    );
-  }
-}
+  return (
+    <div className="blog">
+      <Header
+        list={categoriesList}
+        zenMode={zenMode}
+        onZenActivationClicked={handleZenMode}
+      />
+      <Switch>
+        {categoriesList.map((routeObject) => (
+          <Route exact key={routeObject.route} path={routeObject.route}>
+            <Posts list={filterPosts(routeObject.label)} zenOn={zenMode} />
+          </Route>
+        ))}
+
+        <Route>
+          <NotFound />
+        </Route>
+      </Switch>
+      <Footer />
+    </div>
+  );
+};
 
 Header.propTypes = {
-  categories: PropTypes.arrayOf(
+  list: PropTypes.arrayOf(
     PropTypes.shape({
       route: PropTypes.string.isRequired,
       label: PropTypes.string.isRequired,

@@ -1,15 +1,21 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import './styles.scss';
 
-const Header = ({ categories, zenMode, onZenActivationClicked }) => (
+const Header = ({ list, zenMode, onZenActivationClicked }) => (
   <header className="menu">
     <nav>
-      {categories.map(({ route, label }) => (
-        <a className="menu-link menu-link--selected" href={route}>
+      {list.map(({ route, label }) => (
+        <NavLink
+          className="menu-link"
+          key={route}
+          to={route}
+          activeClassName="menu-link--selected"
+        >
           {label}
-        </a>
+        </NavLink>
       ))}
 
       <button
@@ -27,7 +33,7 @@ const Header = ({ categories, zenMode, onZenActivationClicked }) => (
 
 Header.propTypes = {
   zenMode: PropTypes.bool,
-  categories: PropTypes.arrayOf(
+  list: PropTypes.arrayOf(
     PropTypes.shape({
       route: PropTypes.string,
       label: PropTypes.string,
@@ -37,7 +43,7 @@ Header.propTypes = {
 
 Header.defaultProps = {
   zenMode: false,
-  categories: [],
+  list: [],
 };
 
 export default Header;
