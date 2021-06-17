@@ -19,9 +19,7 @@ Posts.propTypes = {
   zenOn: PropTypes.bool,
   posts: PropTypes.arrayOf(
     PropTypes.shape({
-      id: PropTypes.number,
-      title: PropTypes.string,
-      category: PropTypes.string,
+      id: PropTypes.number.isRequired,
     }),
   ),
 };

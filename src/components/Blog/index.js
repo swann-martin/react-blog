@@ -1,5 +1,6 @@
 // == Import
 import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
 
 // Composants
 import Header from 'src/components/Header';
@@ -32,8 +33,6 @@ class Blog extends PureComponent {
   render() {
     const { posts, categories, isZen } = this.state;
 
-    console.log('categoriesData', categoriesData);
-    console.log('postData', postsData);
     return (
       <div className="blog">
         <Header
@@ -47,6 +46,15 @@ class Blog extends PureComponent {
     );
   }
 }
+
+Header.propTypes = {
+  categories: PropTypes.arrayOf(
+    PropTypes.shape({
+      route: PropTypes.string.isRequired,
+      label: PropTypes.string.isRequired,
+    }),
+  ).isRequired,
+};
 
 // == Export
 export default Blog;
